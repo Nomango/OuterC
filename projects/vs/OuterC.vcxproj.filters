@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="oc">
+      <UniqueIdentifier>{2dd2d83d-a769-4d3e-ae19-ce54b34bb586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="oc\function">
+      <UniqueIdentifier>{b23a72db-9054-40ed-bf3d-64e47e6a5cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="oc\json">
+      <UniqueIdentifier>{22e34bc6-61f2-499f-92e9-026a0a2cfb50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="oc\vector">
+      <UniqueIdentifier>{d5f244b1-4910-4959-8fcf-5118e811c64e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\oc\any.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\basic_json.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\function.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\intrusive_list.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\intrusive_ptr.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\noncopyable.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\oc.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\singleton.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\string.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\vector.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\function\details.h">
+      <Filter>oc\function</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_value.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_intput_adapter.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_iterator.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_output_adapter.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_parser.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_serializer.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_value_getter.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\json_exception.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\vector\details.h">
+      <Filter>oc\vector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\macros.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
