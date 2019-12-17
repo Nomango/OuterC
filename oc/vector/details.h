@@ -13,7 +13,7 @@ namespace __vector_details
 {
 
 // vector_memory_manager<> with memory operations
-template<typename _Ty, typename _Alloc, bool _IsTriviallyCopyable = std::is_trivially_copyable<_Ty>::value>
+template<typename _Ty, typename _Alloc, bool _IsTrivial = std::is_trivial<_Ty>::value>
 struct vector_memory_manager;
 
 
