@@ -18,9 +18,6 @@
     <ClInclude Include="..\..\oc\any.h">
       <Filter>oc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\oc\basic_json.h">
-      <Filter>oc</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\oc\function.h">
       <Filter>oc</Filter>
     </ClInclude>
@@ -76,6 +73,12 @@
       <Filter>oc\vector</Filter>
     </ClInclude>
     <ClInclude Include="..\..\oc\macros.h">
+      <Filter>oc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json\basic_json.h">
+      <Filter>oc\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\oc\json.h">
       <Filter>oc</Filter>
     </ClInclude>
   </ItemGroup>

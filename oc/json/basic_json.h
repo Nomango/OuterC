@@ -735,6 +735,26 @@ public:
 public:
 	// dumps functions
 
+	string_type dump(
+		const int indent = -1,
+		const char_type indent_char = ' ',
+		const bool char_escape = true) const
+	{
+		string_type result;
+		__json_detail::string_output_adapter<string_type> adapter(result);
+		dump(&adapter, indent, indent_char, char_escape);
+		return result;
+	}
+
+	void dump(
+		__json_detail::output_adapter<char_type>* adapter,
+		const int indent = -1,
+		const char_type indent_char = ' ',
+		const bool char_escape = true) const
+	{
+		__json_detail::json_serializer<basic_json>(adapter, indent_char).dump(*this, (indent >= 0), char_escape, static_cast<uint32_t>(indent));
+	}
+
 	friend std::basic_ostream<char_type>& operator<<(std::basic_ostream<char_type>& out, const basic_json& json)
 	{
 		using char_type = typename std::basic_ostream<char_type>::char_type;
@@ -744,45 +764,12 @@ public:
 		out.width(0);
 
 		__json_detail::stream_output_adapter<char_type> adapter(out);
-		__json_detail::json_serializer<basic_json>(&adapter, out.fill()).dump(json, pretty_print, static_cast<uint32_t>(indentation));
+		__json_detail::json_serializer<basic_json>(&adapter, out.fill()).dump(json, pretty_print, true, static_cast<uint32_t>(indentation));
 		return out;
-	}
-
-	string_type dump(
-		const int indent = -1,
-		const char_type indent_char = ' ') const
-	{
-		string_type result;
-		__json_detail::string_output_adapter<string_type> adapter(result);
-		dump(&adapter, indent, indent_char);
-		return result;
-	}
-
-	void dump(
-		__json_detail::output_adapter<char_type>* adapter,
-		const int indent = -1,
-		const char_type indent_char = ' ') const
-	{
-		if (indent >= 0)
-		{
-			__json_detail::json_serializer<basic_json>(adapter, indent_char).dump(*this, true, static_cast<uint32_t>(indent));
-		}
-		else
-		{
-			__json_detail::json_serializer<basic_json>(adapter, indent_char).dump(*this, false, 0);
-		}
 	}
 
 public:
 	// parse functions
-
-	friend std::basic_istream<char_type>&
-		operator>>(std::basic_istream<char_type>& in, basic_json& json)
-	{
-		__json_detail::stream_input_adapter<char_type> adapter(in);
-		__json_detail::json_parser<basic_json>(&adapter).parse(json);
-		return in;
-	}
 
 	static inline basic_json parse(const string_type& str)
 	{
@@ -807,6 +794,14 @@ public:
 		basic_json result;
 		__json_detail::json_parser<basic_json>(adapter).parse(result);
 		return result;
+	}
+
+	friend std::basic_istream<char_type>&
+		operator>>(std::basic_istream<char_type>& in, basic_json& json)
+	{
+		__json_detail::stream_input_adapter<char_type> adapter(in);
+		__json_detail::json_parser<basic_json>(&adapter).parse(json);
+		return in;
 	}
 
 public:

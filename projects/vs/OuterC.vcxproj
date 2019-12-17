@@ -145,11 +145,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\oc\any.h" />
-    <ClInclude Include="..\..\oc\basic_json.h" />
     <ClInclude Include="..\..\oc\function.h" />
     <ClInclude Include="..\..\oc\function\details.h" />
     <ClInclude Include="..\..\oc\intrusive_list.h" />
     <ClInclude Include="..\..\oc\intrusive_ptr.h" />
+    <ClInclude Include="..\..\oc\json.h" />
+    <ClInclude Include="..\..\oc\json\basic_json.h" />
     <ClInclude Include="..\..\oc\json\json_exception.h" />
     <ClInclude Include="..\..\oc\json\json_intput_adapter.h" />
     <ClInclude Include="..\..\oc\json\json_iterator.h" />

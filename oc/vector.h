@@ -12,10 +12,7 @@ namespace oc
 // vector<>
 // Lightweight std::vector<>-like class
 //
-template<
-	typename _Ty,
-	typename _Alloc = std::allocator<_Ty>,
-	typename _Manager = __vector_details::vector_memory_manager<_Ty, _Alloc>>
+template <typename _Ty, typename _Alloc = std::allocator<_Ty>>
 class vector
 {
 public:
@@ -28,7 +25,7 @@ public:
 	using reverse_iterator			= std::reverse_iterator<iterator>;
 	using const_reverse_iterator	= std::reverse_iterator<const_iterator>;
 	using allocator_type			= typename _Alloc;
-	using manager					= typename _Manager;
+	using manager					= typename __vector_details::vector_memory_manager<_Ty, _Alloc>;
 	using initializer_list			= std::initializer_list<value_type>;
 
 public:
@@ -43,11 +40,11 @@ public:
 	template <typename _Iter>
 	inline vector(_Iter first, _Iter last)									: vector() { assign(first, last); }
 
-	inline vector&		operator=(const vector& src)						{ if (&src != this) { resize(src.size_); manager::copy_data(begin(), src.cbegin(), size_); } return (*this); }
+	inline vector&		operator=(const vector& src)						{ if (&src != this) { resize(src.size_); manager::copy_n(begin(), src.cbegin(), size_); } return (*this); }
 	inline vector&		operator=(vector&& src) noexcept					{ swap(src); return *this; }
 	inline vector&		operator=(initializer_list list)					{ if (list.size()) { assign(list.begin(), list.end()); } else clear(); return (*this); }
 
-	inline vector&		assign(size_type count, const _Ty& val)				{ if (count > 0) { resize(count); manager::copy_data(begin(), count, val); } else clear(); return (*this); }
+	inline vector&		assign(size_type count, const _Ty& val)				{ if (count > 0) { resize(count); manager::copy(begin(), count, val); } else clear(); return (*this); }
 	inline vector&		assign(const vector& src)							{ return operator=(src); }
 	inline vector&		assign(initializer_list list)						{ return operator=(list); }
 
@@ -109,8 +106,8 @@ protected:
 	_Ty*		data_;
 };
 
-template<typename _Ty, typename _Alloc, typename _Manager>
-void vector<_Ty, _Alloc, _Manager>::resize(size_type new_size, const _Ty& val)
+template<typename _Ty, typename _Alloc>
+void vector<_Ty, _Alloc>::resize(size_type new_size, const _Ty& val)
 {
 	if (new_size > size_)
 	{
@@ -127,8 +124,8 @@ void vector<_Ty, _Alloc, _Manager>::resize(size_type new_size, const _Ty& val)
 	size_ = new_size;
 }
 
-template<typename _Ty, typename _Alloc, typename _Manager>
-void vector<_Ty, _Alloc, _Manager>::reserve(size_type new_capacity)
+template<typename _Ty, typename _Alloc>
+void vector<_Ty, _Alloc>::reserve(size_type new_capacity)
 {
 	if (new_capacity <= capacity_)
 		return;
@@ -136,8 +133,7 @@ void vector<_Ty, _Alloc, _Manager>::reserve(size_type new_capacity)
 	auto new_data = manager::allocate(new_capacity);
 	if (data_)
 	{
-		manager::construct(new_data, size_/* only construct needed size */);
-		manager::copy_data(new_data, data_, size_);
+		manager::construct_n(new_data, data_, size_/* only construct needed size */);
 		/* destroy old memory, but not resize */
 		destroy();
 	}
@@ -145,9 +141,9 @@ void vector<_Ty, _Alloc, _Manager>::reserve(size_type new_capacity)
 	capacity_ = new_capacity;
 }
 
-template<typename _Ty, typename _Alloc, typename _Manager>
-typename vector<_Ty, _Alloc, _Manager>::iterator
-	vector<_Ty, _Alloc, _Manager>::erase(const_iterator first, const_iterator last)
+template<typename _Ty, typename _Alloc>
+typename vector<_Ty, _Alloc>::iterator
+	vector<_Ty, _Alloc>::erase(const_iterator first, const_iterator last)
 {
 	const auto off = first - begin();
 	const auto count = last - first;
@@ -156,15 +152,15 @@ typename vector<_Ty, _Alloc, _Manager>::iterator
 	{
 		check_offset(off);
 
-		manager::move_data(begin() + off, begin() + off + count, size_ - off - count);
+		manager::move(begin() + off, begin() + off + count, size_ - off - count);
 		resize(size_ - count);  // do destruction
 	}
 	return begin() + off;
 }
 
-template<typename _Ty, typename _Alloc, typename _Manager>
-typename vector<_Ty, _Alloc, _Manager>::iterator
-	vector<_Ty, _Alloc, _Manager>::insert(const_iterator where, const _Ty& v)
+template<typename _Ty, typename _Alloc>
+typename vector<_Ty, _Alloc>::iterator
+	vector<_Ty, _Alloc>::insert(const_iterator where, const _Ty& v)
 {
 	const auto off = where - begin();
 	const auto insert_at = begin() + off;
@@ -172,7 +168,7 @@ typename vector<_Ty, _Alloc, _Manager>::iterator
 	check_offset(off);
 		
 	resize(size_ + 1);
-	manager::move_data(insert_at + 1, insert_at, size_ - off - 1);
+	manager::move(insert_at + 1, insert_at, size_ - off - 1);
 	data_[off] = v;
 	return begin() + off;
 }
